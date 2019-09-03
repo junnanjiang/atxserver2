@@ -46,14 +46,20 @@ class SimpleLoginHandler(BaseRequestHandler):
 
 
     async def post(self):
-        name = self.get_argument("name")
+        name = self.get_argument("name") # 获取用户名
+        # 用户信息列表
+        edroity_name_list = {'jiangjunnan': 'xijunnan', 'wupeng': 'Edroity4000', 'chenjialu': 'Edroity4000', 'wangjun': 'Edroity4000', 'liuqianjun': 'Edroity4000', 'jianghong': 'Edroity4000', 'qianzaiyi': 'Edroity4000', 'huangxiang': 'Edroity4000', 'yangyibin': 'Edroity4000', 'zuoyongbo': 'Edroity4000', 'chenyukuan': 'Edroity4000', 'yaozhenggang': 'Edroity4000', 'pengzhiyuan': 'Edroity4000', 'zhaolei': 'Edroity4000', 'huangguanjie': 'Edroity4000', 'songtiefei': 'Edroity4000', 'sunxiaofei': 'Edroity4000', 'huangwanchao': 'Edroity4000', 'zhangyun': 'Edroity4000'}
         password = self.get_argument("password")
-        print(password)
-        if password != 'Edroity666': # 默认密码
-            self.write('<html><body>PASSWORD ERROR</body></html>')
+        
+        
+        if name in edroity_name_list.keys():
+            if password == edroity_name_list[name]:
+                email = name + "@edroity.com"
+                await self.set_current_user(email, name)
+                next_url = self.get_cookie("next", "/")
+                self.clear_cookie("next")
+                self.redirect(next_url)
+            else:
+                self.write('<html><body>Wrong Password!</body></html>')
         else:
-            email = name + "@anonymous.com"
-            await self.set_current_user(email, name)
-            next_url = self.get_cookie("next", "/")
-            self.clear_cookie("next")
-            self.redirect(next_url)
+            self.write('<html><body>You are not in Edroity.</body></html>')
