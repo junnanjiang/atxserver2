@@ -120,7 +120,13 @@ class="container-fluid"
             </template>
         </el-table-column>
         <el-table-column prop="prop_brand" sortable label="品牌"></el-table-column>
-
+        
+        <el-table-column label="使用人">
+            <template slot-scope="scope">
+                <span v-text="scope.row.userId"></span>
+            </template>
+        </el-table-column>
+        
         <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="资产编号">
             <template slot-scope="scope">
                 <!-- <el-input size="mini"></el-input> -->
